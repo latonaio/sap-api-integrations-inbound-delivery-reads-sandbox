@@ -1,0 +1,7 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-inbound-delivery-reads/SAP_API_Caller/caller.go#L67",
+	"function": "sap-api-integrations-inbound-delivery-reads/SAP_API_Caller.(*SAPAPICaller).Header",
+	"level": "INFO",
+	"message": "&{AddressID:22952 Building: BusinessPartnerName1:Domestic US Supplier 80 (Ariba Network) CityName:Newark CorrespondenceLanguage:EN Country:US FaxNumber: Nation: PhoneNumber:999 256 2365 PostalCode:19725-0001 Region:DE StreetName:Old Porter Rd}",
+	"time": "2021-12-12T15:30:24.711819+09:00"
+}

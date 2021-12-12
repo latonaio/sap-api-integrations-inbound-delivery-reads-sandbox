@@ -1,0 +1,7 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-inbound-delivery-reads/SAP_API_Caller/caller.go#L60",
+	"function": "sap-api-integrations-inbound-delivery-reads/SAP_API_Caller.(*SAPAPICaller).Header",
+	"level": "INFO",
+	"message": "[{AddressID:22952 ContactPerson:0000000000 Customer: PartnerFunction:VN Personnel:00000000 SDDocument:180000000 SDDocumentItem:000000 Supplier:17300080 ToAddress:https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002/A_InbDeliveryPartner(PartnerFunction='VN',SDDocument='180000000')/to_Address}]",
+	"time": "2021-12-12T15:30:23.912901+09:00"
+}
