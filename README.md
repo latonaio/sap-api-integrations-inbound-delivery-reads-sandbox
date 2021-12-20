@@ -1,5 +1,5 @@
 # sap-api-integrations-inbound-delivery-reads 
-sap-api-integrations-inbound-delivery-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API で出荷データ を取得するマイクロサービスです。    
+sap-api-integrations-inbound-delivery-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API で入荷データ を取得するマイクロサービスです。    
 sap-api-integrations-inbound-delivery-reads には、サンプルのAPI Json フォーマットが含まれています。   
 sap-api-integrations-inbound-delivery-reads は、オンプレミス版である（＝クラウド版ではない）SAPS4HANA API の利用を前提としています。クラウド版APIを利用する場合は、ご注意ください。   
 https://api.sap.com/api/OP_API_INBOUND_DELIVERY_SRV_0002/overview  
