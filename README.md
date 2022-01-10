@@ -36,6 +36,7 @@ sap-api-integrations-inbound-delivery-reads において、API への値入力�
 ### SDC レイアウト
 
 * inoutSDC.InboundDelivery.DeliveryDocument（入荷伝票）
+* inoutSDC.InboundDelivery.DeliveryDocumentItem.DeliveryDocumentItem（入荷伝票明細）
 
 ## SAP API Bussiness Hub の API の選択的コール
 
@@ -51,7 +52,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 	"api_schema": "sap.s4.beh.inbounddelivery.v1.InboundDelivery.Created.v1",
 	"accepter": ["Header"],
 	"delivery_document": "180000000",
-	"deleted": false
+	"deleted": ""
 ```
   
 * 全データを取得する際のsample.jsonの記載例(2)  
@@ -60,9 +61,9 @@ accepter において 下記の例のように、データの種別（＝APIの�
 
 ```
 	"api_schema": "sap.s4.beh.inbounddelivery.v1.InboundDelivery.Created.v1",
-	"accepter": ["All"],
+	"accepter": ["Item"],
 	"delivery_document": "180000000",
-	"deleted": false
+	"deleted": ""
 ```
 
 ## 指定されたデータ種別のコール
@@ -71,7 +72,7 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument, deliveryDocumentItem string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -79,6 +80,11 @@ func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument string, accepter
 		case "Header":
 			func() {
 				c.Header(deliveryDocument)
+				wg.Done()
+			}()
+		case "Item":
+			func() {
+				c.Item(deliveryDocument, deliveryDocumentItem)
 				wg.Done()
 			}()
 		default:
@@ -96,10 +102,82 @@ func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument string, accepter
 
 ```
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-inbound-delivery-reads/SAP_API_Caller/caller.go#L53",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-inbound-delivery-reads/SAP_API_Caller/caller.go#L58",
 	"function": "sap-api-integrations-inbound-delivery-reads/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
-	"message": "[{ReceivingLocationTimeZone:UTC ActualDeliveryRoute: ActualGoodsMovementDate:/Date(1484092800000)/ ActualGoodsMovementTime:PT00H00M00S BillingDocumentDate: CompleteDeliveryIsDefined:false ConfirmationTime:PT00H00M00S CreationDate:/Date(1484092800000)/ CreationTime:PT11H32M52S CustomerGroup: DeliveryBlockReason: DeliveryDate:/Date(1485734400000)/ DeliveryDocument:180000000 DeliveryDocumentBySupplier:ASN#451435 DeliveryDocumentType:EL DeliveryIsInPlant:false DeliveryPriority:00 DeliveryTime:PT22H30M00S DocumentDate:/Date(1484092800000)/ GoodsIssueOrReceiptSlipNumber: GoodsIssueTime:PT00H00M00S HeaderBillgIncompletionStatus:C HeaderBillingBlockReason: HeaderDelivIncompletionStatus:C HeaderGrossWeight:10.000 HeaderNetWeight:9.000 HeaderPackingIncompletionSts:C HeaderPickgIncompletionStatus:C HeaderVolume:0.000 HeaderVolumeUnit: HeaderWeightUnit:KG IncotermsClassification: IsExportDelivery: LastChangeDate:/Date(1484092800000)/ LoadingDate: LoadingPoint: LoadingTime:PT00H00M00S MeansOfTransport: OrderCombinationIsAllowed:true OrderID: PickedItemsLocation: PickingDate: PickingTime:PT00H00M00S PlannedGoodsIssueDate: ProposedDeliveryRoute: ReceivingPlant: RouteSchedule: SalesDistrict: SalesOffice: SalesOrganization: SDDocumentCategory:7 ShipmentBlockReason: ShippingCondition:01 ShippingPoint: ShippingType: ShipToParty: SoldToParty: Supplier:17300080 TotalBlockStatus: TotalCreditCheckStatus: TotalNumberOfPackage:00000 TransactionCurrency: TransportationGroup:0001 TransportationPlanningDate: TransportationPlanningStatus: TransportationPlanningTime:PT00H00M00S UnloadingPointName: ToPartner:https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002/A_InbDeliveryHeader('180000000')/to_DeliveryDocumentPartner ToItem:https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002/A_InbDeliveryHeader('180000000')/to_DeliveryDocumentItem}]",
-	"time": "2021-12-12T15:30:23.162287+09:00"
+	"message": [
+		{
+			"ReceivingLocationTimeZone": "UTC",
+			"ActualDeliveryRoute": "",
+			"ActualGoodsMovementDate": "/Date(1484092800000)/",
+			"ActualGoodsMovementTime": "PT00H00M00S",
+			"BillingDocumentDate": "",
+			"CompleteDeliveryIsDefined": false,
+			"ConfirmationTime": "PT00H00M00S",
+			"CreationDate": "/Date(1484092800000)/",
+			"CreationTime": "PT11H32M52S",
+			"CustomerGroup": "",
+			"DeliveryBlockReason": "",
+			"DeliveryDate": "/Date(1485734400000)/",
+			"DeliveryDocument": "180000000",
+			"DeliveryDocumentBySupplier": "ASN#451435",
+			"DeliveryDocumentType": "EL",
+			"DeliveryIsInPlant": false,
+			"DeliveryPriority": "00",
+			"DeliveryTime": "PT22H30M00S",
+			"DocumentDate": "/Date(1484092800000)/",
+			"GoodsIssueOrReceiptSlipNumber": "",
+			"GoodsIssueTime": "PT00H00M00S",
+			"HeaderBillgIncompletionStatus": "C",
+			"HeaderBillingBlockReason": "",
+			"HeaderDelivIncompletionStatus": "C",
+			"HeaderGrossWeight": "10.000",
+			"HeaderNetWeight": "9.000",
+			"HeaderPackingIncompletionSts": "C",
+			"HeaderPickgIncompletionStatus": "C",
+			"HeaderVolume": "0.000",
+			"HeaderVolumeUnit": "",
+			"HeaderWeightUnit": "KG",
+			"IncotermsClassification": "",
+			"IsExportDelivery": "",
+			"LastChangeDate": "/Date(1484092800000)/",
+			"LoadingDate": "",
+			"LoadingPoint": "",
+			"LoadingTime": "PT00H00M00S",
+			"MeansOfTransport": "",
+			"OrderCombinationIsAllowed": true,
+			"OrderID": "",
+			"PickedItemsLocation": "",
+			"PickingDate": "",
+			"PickingTime": "PT00H00M00S",
+			"PlannedGoodsIssueDate": "",
+			"ProposedDeliveryRoute": "",
+			"ReceivingPlant": "",
+			"RouteSchedule": "",
+			"SalesDistrict": "",
+			"SalesOffice": "",
+			"SalesOrganization": "",
+			"SDDocumentCategory": "7",
+			"ShipmentBlockReason": "",
+			"ShippingCondition": "01",
+			"ShippingPoint": "",
+			"ShippingType": "",
+			"ShipToParty": "",
+			"SoldToParty": "",
+			"Supplier": "17300080",
+			"TotalBlockStatus": "",
+			"TotalCreditCheckStatus": "",
+			"TotalNumberOfPackage": "00000",
+			"TransactionCurrency": "",
+			"TransportationGroup": "0001",
+			"TransportationPlanningDate": "",
+			"TransportationPlanningStatus": "",
+			"TransportationPlanningTime": "PT00H00M00S",
+			"UnloadingPointName": "",
+			"to_Partner": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002/A_InbDeliveryHeader('180000000')/to_DeliveryDocumentPartner",
+			"to_Item": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002/A_InbDeliveryHeader('180000000')/to_DeliveryDocumentItem"
+		}
+	],
+	"time": "2022-01-10T10:43:59.499612+09:00"
 }
 ```
