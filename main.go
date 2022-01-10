@@ -10,7 +10,7 @@ import (
 func main() {
 	l := logger.NewLogger()
 	fr := sap_api_input_reader.NewFileReader()
-	inoutSDC := fr.ReadSDC("./Inputs/SDC_Inbound_Delivery_sample.json")
+	inoutSDC := fr.ReadSDC("./Inputs/SDC_Inbound_Delivery_Item_sample.json")
 	caller := sap_api_caller.NewSAPAPICaller(
 		"https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/", l,
 	)
@@ -18,12 +18,13 @@ func main() {
 	accepter := inoutSDC.Accepter
 	if len(accepter) == 0 || accepter[0] == "All" {
 		accepter = []string{
-			"Header", 
+			"Header", "Item",
 		}
 	}
 
 	caller.AsyncGetInboundDelivery(
 		inoutSDC.InboundDelivery.DeliveryDocument,
+		inoutSDC.InboundDelivery.DeliveryDocumentItem.DeliveryDocumentItem,
 		accepter,
 	)
 }

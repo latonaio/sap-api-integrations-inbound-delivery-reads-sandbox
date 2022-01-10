@@ -1,5 +1,5 @@
 # sap-api-integrations-inbound-delivery-reads 
-sap-api-integrations-inbound-delivery-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API で出荷データ を取得するマイクロサービスです。    
+sap-api-integrations-inbound-delivery-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API で入荷データ を取得するマイクロサービスです。    
 sap-api-integrations-inbound-delivery-reads には、サンプルのAPI Json フォーマットが含まれています。   
 sap-api-integrations-inbound-delivery-reads は、オンプレミス版である（＝クラウド版ではない）SAPS4HANA API の利用を前提としています。クラウド版APIを利用する場合は、ご注意ください。   
 https://api.sap.com/api/OP_API_INBOUND_DELIVERY_SRV_0002/overview  
@@ -25,6 +25,7 @@ sap-api-integrations-inbound-delivery-reads が対応する APIサービス は�
 sap-api-integrations-inbound-delivery-reads には、次の API をコールするためのリソースが含まれています。  
 
 * A_InbDeliveryHeader（入荷伝票 - ヘッダ）※入荷伝票の詳細データを取得するために、ToPartner、ToAddress、ToItemと合わせて利用されます。
+* A_InbDeliveryItem（入荷伝票 - 明細）
 * ToPartner（入荷伝票 - 取引先）
 * ToAddress（入荷伝票 - アドレス）
 * ToItem（入荷伝票 - 明細）
@@ -90,8 +91,8 @@ func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument string, accepter
 ```
 ## Output  
 本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
-以下の sample.json の例は、SAP 入荷伝票　の　ヘッダ が取得された結果の JSON の例です。  
-以下の項目のうち、"ReceivingLocationTimeZone" ～ "ToPartner" は、/SAP_API_Output_Formatter/type.go 内 の Type Product {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
+以下の sample.json の例は、SAP 入荷伝票　の　ヘッダデータ が取得された結果の JSON の例です。  
+以下の項目のうち、"ReceivingLocationTimeZone" ～ "ToPartner" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
 {
