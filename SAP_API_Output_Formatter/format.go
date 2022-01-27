@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"sap-api-integrations-inbound-delivery-reads/SAP_API_Caller/responses"
 
-	"github.com/latonaio/golang-logging-library/logger"
+	"github.com/latonaio/golang-logging-library-for-sap/logger"
 	"golang.org/x/xerrors"
 )
 

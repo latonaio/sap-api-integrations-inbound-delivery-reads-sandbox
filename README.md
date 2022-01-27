@@ -96,9 +96,9 @@ func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument, deliveryDocumen
 }
 ```
 ## Output  
-本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
+本マイクロサービスでは、[golang-logging-library-for-sap](https://github.com/latonaio/golang-logging-library-for-sap) により、以下のようなデータがJSON形式で出力されます。  
 以下の sample.json の例は、SAP 入荷伝票　の　ヘッダデータ が取得された結果の JSON の例です。  
-以下の項目のうち、"ReceivingLocationTimeZone" ～ "ToPartner" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
+以下の項目のうち、"ReceivingLocationTimeZone" ～ "ToPartner" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library-for-sap による 定型フォーマットの出力結果です。  
 
 ```
 {
@@ -178,6 +178,6 @@ func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument, deliveryDocumen
 			"to_Item": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV;v=0002/A_InbDeliveryHeader('180000000')/to_DeliveryDocumentItem"
 		}
 	],
-	"time": "2022-01-10T10:43:59.499612+09:00"
+	"time": "2022-01-27T21:33:36.990858+09:00"
 }
 ```

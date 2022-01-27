@@ -18,7 +18,7 @@
 			"BusinessArea": "",
 			"ControllingArea": "",
 			"CostCenter": "",
-			"CreationDate": "/Date(1484092800000)/",
+			"CreationDate": "2017-01-11T09:00:00+09:00",
 			"CreationTime": "PT11H32M52S",
 			"DeliveryDocument": "180000000",
 			"DeliveryDocumentItem": "000010",
@@ -87,5 +87,5 @@
 			"UnlimitedOverdeliveryIsAllowed": false
 		}
 	],
-	"time": "2022-01-10T10:44:02.00094+09:00"
+	"time": "2022-01-27T21:36:49+09:00"
 }
