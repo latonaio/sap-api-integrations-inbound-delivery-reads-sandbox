@@ -1,5 +1,5 @@
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-inbound-delivery-reads/SAP_API_Caller/caller.go#L79",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-inbound-delivery-reads-sandbox/SAP_API_Caller/caller.go#L84",
 	"function": "sap-api-integrations-inbound-delivery-reads/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
 	"message": [
@@ -18,8 +18,8 @@
 			"BusinessArea": "",
 			"ControllingArea": "",
 			"CostCenter": "",
-			"CreationDate": "2017-01-11T09:00:00+09:00",
-			"CreationTime": "PT11H32M52S",
+			"CreationDate": "2017-01-11",
+			"CreationTime": "11:32:52",
 			"DeliveryDocument": "180000000",
 			"DeliveryDocumentItem": "000010",
 			"DeliveryDocumentItemCategory": "ELN",
@@ -68,7 +68,7 @@
 			"PickingStatus": "A",
 			"Plant": "1710",
 			"ProductAvailabilityDate": "",
-			"ProductAvailabilityTime": "PT00H00M00S",
+			"ProductAvailabilityTime": "00:00:00",
 			"ProfitabilitySegment": "0000000000",
 			"ProfitCenter": "YB700",
 			"QuantityIsFixed": false,
@@ -87,5 +87,5 @@
 			"UnlimitedOverdeliveryIsAllowed": false
 		}
 	],
-	"time": "2022-01-27T21:36:49+09:00"
+	"time": "2022-09-16T23:38:53+09:00"
 }

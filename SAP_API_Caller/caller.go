@@ -26,7 +26,7 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument, deliveryDocumentItem string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument, deliveryDocumentItem, referenceSDDocument, referenceSDDocumentItem string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -39,6 +39,11 @@ func (c *SAPAPICaller) AsyncGetInboundDelivery(deliveryDocument, deliveryDocumen
 		case "Item":
 			func() {
 				c.Item(deliveryDocument, deliveryDocumentItem)
+				wg.Done()
+			}()
+		case "PurchaseOrder":
+			func() {
+				c.PurchaseOrder(referenceSDDocument, referenceSDDocumentItem)
 				wg.Done()
 			}()
 		default:
@@ -185,6 +190,36 @@ func (c *SAPAPICaller) callOutboundDeliverySrvAPIRequirementItem(api, deliveryDo
 	return data, nil
 }
 
+func (c *SAPAPICaller) PurchaseOrder(referenceSDDocument, referenceSDDocumentItem string) {
+	data, err := c.callInboundDeliverySrvAPIRequirementPurchaseOrder("A_InbDeliveryItem", referenceSDDocument, referenceSDDocumentItem)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	c.log.Info(data)
+}
+
+func (c *SAPAPICaller) callInboundDeliverySrvAPIRequirementPurchaseOrder(api, referenceSDDocument, referenceSDDocumentItem string) ([]sap_api_output_formatter.Item, error) {
+	url := strings.Join([]string{c.baseURL, "API_INBOUND_DELIVERY_SRV;v=0002", api}, "/")
+	req, _ := http.NewRequest("GET", url, nil)
+
+	c.setHeaderAPIKeyAccept(req)
+	c.getQueryWithPurchaseOrder(req, referenceSDDocument, referenceSDDocumentItem)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToItem(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
 func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
 	req.Header.Set("APIKey", c.apiKey)
 	req.Header.Set("Accept", "application/json")
@@ -199,5 +234,11 @@ func (c *SAPAPICaller) getQueryWithHeader(req *http.Request, deliveryDocument st
 func (c *SAPAPICaller) getQueryWithItem(req *http.Request, deliveryDocument, deliveryDocumentItem string) {
 	params := req.URL.Query()
 	params.Add("$filter", fmt.Sprintf("DeliveryDocument eq '%s' and DeliveryDocumentItem eq '%s'", deliveryDocument, deliveryDocumentItem))
+	req.URL.RawQuery = params.Encode()
+}
+
+func (c *SAPAPICaller) getQueryWithPurchaseOrder(req *http.Request, referenceSDDocument, referenceSDDocumentItem string) {
+	params := req.URL.Query()
+	params.Add("$filter", fmt.Sprintf("ReferenceSDDocument eq '%s' and ReferenceSDDocumentItem eq '%s'", referenceSDDocument, referenceSDDocumentItem))
 	req.URL.RawQuery = params.Encode()
 }

@@ -178,7 +178,7 @@
 			"UnlimitedOverdeliveryIsAllowed": null
 		}
 	},
-	"api_schema": "sap.s4.beh.inbounddelivery.v1.InboundDelivery.Created.v1",
+	"api_schema": "SAPInboundDeliveryReads",
 	"accepter": ["Header"],
 	"delivery_document": "180000000",
 	"deleted": ""
